@@ -3,9 +3,6 @@ package claimsseverity.prepare
 import claimsseverity.misc.SparkUtil._
 import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
 
-import scala.collection.immutable.IndexedSeq
-
-
 class GenerateFiles {
 
   def generateTrainingFile(assembler: VectorAssembler, indexer: Option[Seq[StringIndexer]]) = {

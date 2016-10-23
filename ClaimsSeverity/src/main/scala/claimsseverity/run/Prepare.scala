@@ -4,7 +4,7 @@ package claimsseverity.run
 import claimsseverity.misc.Indexer._
 import claimsseverity.prepare.GenerateFiles
 import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
-
+import claimsseverity.misc.SparkUtil._
 // AKA ETL
 
 object Prepare {
@@ -28,9 +28,9 @@ object Prepare {
 
   def stringIndexedFeatures(prepare: GenerateFiles, assembler: VectorAssembler, idx: Seq[StringIndexer]): Unit = {
     val trainDf = prepare.generateTrainingFile(assembler, Some(idx)).select("id","features","loss")
-    trainDf.write.format("parquet").save("tmp/trainDfStringIndexedFeatures.parquet")
+    trainDf.write.format("parquet").save(config.getString("claims.trainFileCatIndexed"))
 
     val testDf = prepare.generateTestingFile(assembler, Some(idx)).select("id","features")
-    testDf.write.format("parquet").save("tmp/testDfStringIndexedFeatures.parquet")
+    testDf.write.format("parquet").save(config.getString("claims.testFileCatIndexed"))
   }
 }
